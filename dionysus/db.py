@@ -21,6 +21,11 @@ def init_db():
         db.executescript(f.read().decode("utf8"))
 
 
+def init_app(app):
+    app.teardown_appcontext(close_db)
+    app.cli.add_command(init_db_command)
+
+
 def get_db():
     if "db" not in g:
         g.db = sqlite3.connect(
