@@ -32,6 +32,9 @@ def create_app(test_config=None):
     # A page notifying users of Dion's version number.
     @app.route("/version")
     def version():
-        return "Dionysus (Dion v0.0.1-30) is online."
+        return "Dionysus (Dion v0.0.2-18) is online."
+
+    from . import db
+    db.init_app(app)
 
     return app
