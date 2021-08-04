@@ -4,37 +4,35 @@ from flask import Flask
 
 
 def create_app(test_config=None):
-    # Create and configure the app.
-
+    # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        secret_key="dev",
-        database=os.path.join(app.instance_path, "dionysus.sqlite")
+        SECRET_KEY="dev",
+        DATABASE=os.path.join(app.instance_path, "dionysus.sqlite"),
     )
 
     if test_config is None:
-        # Load the instance configuration when not testing, if it exists.
-
+        # load the instance config, if it exists, when not testing
         app.config.from_pyfile("config.py", silent=True)
-
     else:
-        # Load the test configuration if passed in.
-
+        # load the test config if passed in
         app.config.from_mapping(test_config)
 
-    # Ensure the instance folder exists.
+    # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
-
     except OSError:
         pass
 
-    # A page notifying users of Dion's version number.
+    # a simple page displaying the version
     @app.route("/version")
-    def version():
-        return "Dionysus (Dion v0.0.2-18) is online."
+    def hello():
+        return "Dionysus (Dion v0.0.2-45), online."
 
     from . import db
     db.init_app(app)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     return app
