@@ -47,6 +47,12 @@ def login():
     return render_template('auth/login.html')
 
 
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
+
 @bp.route("/register", methods=("GET", "POST"))
 def register():
     if request.method == "post":
