@@ -27,12 +27,16 @@ def create_app(test_config=None):
     # a simple page displaying the version
     @app.route("/version")
     def hello():
-        return "Dionysus (Dion v0.0.8-29), online."
+        return "Dionysus (Dion v0.0.8-40), online."
 
     from . import db
     db.init_app(app)
 
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from . import blog
+    app.register_blueprint(blog.bp)
+    app.add_url_rule('/', endpoint='index')
 
     return app
