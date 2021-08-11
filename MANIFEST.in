@@ -1,0 +1,4 @@
+include dionysus/schema.sql
+graft dionysus/static
+graft dionysus/templates
+global-exclude *.pyc
