@@ -27,7 +27,7 @@ def create_app(test_config=None):
     # a simple page displaying the version
     @app.route("/version")
     def hello():
-        return "Dionysus (Dion v0.2.3-60), online."
+        return "Dionysus (Dion v0.2.4), online."
 
     from . import db
     db.init_app(app)
